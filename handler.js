@@ -10,7 +10,7 @@ const isNumber = x => typeof x === 'number' && !isNaN(x)
 
 /**
  * Handle messages upsert
- * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['messages.upsert']} groupsUpdate 
+ * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['messages.upsert']} groupsUpdate
  */
 
 export async function handler(chatUpdate) {
@@ -33,7 +33,7 @@ export async function handler(chatUpdate) {
                 if(!isNumber(user.exp))
                     user.exp = 0
                 if(!isNumber(user.limit))
-                    user.limit = 10
+                    user.limit = 100
                 if(!isNumber(user.afk))
                     user.afk = -1
                 if(!('afkReason' in user))
@@ -49,7 +49,7 @@ export async function handler(chatUpdate) {
             } else
                 global.db.data.users[m.sender] = {
                     exp: 0,
-                    limit: 10,
+                    limit: 100,
                     lastclaim: 0,
                     registered: false,
                     name: m.name,
@@ -292,10 +292,10 @@ export async function handler(chatUpdate) {
                     fail('private', m, this)
                     continue
                 }
-                if(plugin.register == true && _user.registered == false) { // Butuh daftar?
-                    fail('unreg', m, this)
-                    continue
-                }
+                // if(plugin.register == true && _user.registered == false) { // Butuh daftar?
+                //     fail('unreg', m, this)
+                //     continue
+                // }
                 m.isCommand = true
                 let xp = 'exp' in plugin ? parseInt(plugin.exp) : 17 // XP Earning per command
                 if(xp > 200)
@@ -422,7 +422,7 @@ export async function handler(chatUpdate) {
 }
 /**
  * Handle groups participants update
- * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate 
+ * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['group-participants.update']} groupsUpdate
  */
 export async function participantsUpdate({ id, participants, action }) {
     // if(id in conn.chats) return // First login will spam
@@ -489,7 +489,7 @@ export async function participantsUpdate({ id, participants, action }) {
 
 /**
  * Handler groups update
- * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['groups.update']} groupsUpdate 
+ * @param {import('@adiwajshing/baileys').BaileysEventMap<unknown>['groups.update']} groupsUpdate
  */
 export async function groupsUpdate(groupsUpdate) {
     for (const groupUpdate of groupsUpdate) {
@@ -519,7 +519,7 @@ export async function deleteUpdate(message) {
         let chat = global.db.data.chats[msg.chat] || {}
         if(chat.delete) return
         this.reply(msg.chat, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan. 
+Terdeteksi @${participant.split`@`[0]} telah menghapus pesan.
 Untuk mematikan fitur ini, ketik
 *.enable delete*
 
@@ -543,7 +543,7 @@ global.dfail = (type, m, conn) => {
         botAdmin: '*ONLY BOT ADMIN* • COMMAND INI HANYA BISA DIGUNAKAN KETIKA BOT MENJADI ADMIN',
         unreg: '*YOU ARE NOT REGISTERED YET* • KETIK .daftar UNTUK BISA MENGGUNAKAN FITUR INI',
         restrict: '*RESTRICT* • RESTRICT BELUM DINYALAKAN DICHAAT INI',
-        disable: '*DISABLED* • CMD INI TELAH DIMATIKAN OLEH OWNER', 
+        disable: '*DISABLED* • CMD INI TELAH DIMATIKAN OLEH OWNER',
     }[type]
     if(msg) return conn.reply(m.chat, msg, m)
 }

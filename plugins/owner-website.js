@@ -2,8 +2,8 @@ let handler = async (m) => {
   let replyMessage = `
 *「 Owner Website 」*
 
-Nonton Anime: ryzumi.vip
-Rest API: api.ryzumi.vip
+Nonton Anime: arnime.ammaricano.my.id
+Rest API: api.ammaricano.my.id
 
 `.trim();
 
