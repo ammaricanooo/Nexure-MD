@@ -14,12 +14,16 @@ let handler = async (m, { conn, text, participants }) => {
 		"participant": "0@s.whatsapp.net"
 	}
 
-	conn.sendMessage(m.chat, { text: text, mentions: participants.map(a => a.id) }, { quoted: fkontak })
+    const rawText = m.quoted?.text || text ;
+    const texts = rawText.replace(new RegExp(`^${m.prefix}${m.command}\\s*`, 'i'), '').trim();
+    const mentions = participants.map(a => a.id);
+
+	conn.sendMessage(m.chat, { text: texts || 'Tag semua member 👥', mentions }, { quoted: fkontak })
 }
 
 handler.help = ['hidetag']
 handler.tags = ['group']
-handler.command = /^(hidetag)$/i
+handler.command = /^(hidetag|totag|ht|h)$/i
 
 handler.group = true
 handler.admin = true
